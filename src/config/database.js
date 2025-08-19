@@ -27,9 +27,7 @@ class DB {
       )
       .get(publicId);
 
-    if (!row) {
-      return null;
-    }
+    if (!row) return null;
 
     return row;
   }
@@ -44,6 +42,28 @@ class DB {
       .run(publicId, title, content, createdAt, updatedAt);
 
     return annotationData;
+  }
+
+  getAllAnnotations() {
+    const annotations = this.database
+      .prepare("SELECT * FROM annotation ORDER BY createdAt DESC")
+      .all();
+
+    if (!annotations) return null;
+
+    return annotations;
+  }
+
+  deleteAnnotation(publicId) {
+    const annotation = this.database.prepare(
+      `DELETE FROM annotation WHERE publicId = ?`,
+    );
+
+    const info = annotation.run(publicId);
+
+    if (!info) return null;
+
+    return info.changes > 0;
   }
 }
 
