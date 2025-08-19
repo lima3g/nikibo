@@ -18,14 +18,20 @@ class DB {
   `);
   }
 
-  getUniqueAnotation(annotationData) {
-    const { publicId } = annotationData;
+  getUniqueAnnotation(publicId) {
+    const row = this.database
+      .prepare(
+        `
+      SELECT title, content FROM annotation WHERE publicId = ?
+      `,
+      )
+      .get(publicId);
 
-    const requestedAnnotation = this.database
-      .prepare("SELECT annotation WHERE id = (publicID) VALUES (?)")
-      .run(publicId);
+    if (!row) {
+      return null;
+    }
 
-    return requestedAnnotation;
+    return row;
   }
 
   insertNewAnnotation(annotationData) {

@@ -8,12 +8,8 @@ routes.get("/", (req, res) => {
   return res.send("receba");
 });
 
-routes.post("/annotation", (req, res) => {
-  const { title, content } = req.body;
+routes.get("/annotation/:_id", AnnotationController.index);
 
-  const annotation = AnnotationController.insert({ title, content });
-
-  return res.json(annotation).status(200);
-});
+routes.post("/annotation", AnnotationController.store);
 
 export default routes;
