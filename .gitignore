@@ -4,7 +4,6 @@ node_modules
 # Environment
 .env.local
 .env.*.local
-.db
 
 # Development
 
@@ -12,3 +11,4 @@ node_modules
 .prettierrc
 .txt
 .http
+.db
